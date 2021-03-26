@@ -14,7 +14,9 @@ class SectionController extends Controller
      */
     public function index()
     {
-        return view('Sections.sections');
+
+        $sections = Section::all();
+        return view('Sections.sections',compact('sections'));
     }
 
     /**
@@ -93,10 +95,33 @@ if($secExist) {
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Section $section)
+    public function update(Request $request)
     {
-        //
-    }
+        $id = $request->id;
+        $validated = $request->validate([
+            'section_name' => 'required|max:255|unique:sections,section_name,'.$id,
+            'description' => 'required',
+        ],
+        
+        [
+
+            'section_name.required' => 'يرجى ادخال  اسم القسم',
+            'section_name.unique' => 'اسم القسم مسجل مسبقا',
+            'description' => 'يرجي ادخال وصف القسم',
+
+
+
+
+        ]);
+        $section = Section::find($id);
+        $section->update(['section_name'=>$request->section_name,
+        'description'=>$request->description,
+        ]);
+        session()->flash('EDIT','تم تعديل القسم بنجاح');
+        return redirect('sections');
+
+
+  }
 
     /**
      * Remove the specified resource from storage.
@@ -104,8 +129,12 @@ if($secExist) {
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Section $section)
+    public function destroy(Request $request)
     {
-        //
-    }
+        Section::find($request->id)->delete();
+        session()->flash('delete','تم حذف القسم بنجاح');
+        return redirect('sections');
+
+
+  }
 }

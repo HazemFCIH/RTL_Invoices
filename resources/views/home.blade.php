@@ -1,4 +1,8 @@
 @extends('layouts.master')
+
+@section('title')
+Encryption - Invoices System
+@endsection
 @section('css')
 <!--  Owl-carousel css-->
 <link href="{{URL::asset('assets/plugins/owl-carousel/owl.carousel.css')}}" rel="stylesheet" />

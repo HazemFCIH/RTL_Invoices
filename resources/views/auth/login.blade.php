@@ -1,8 +1,8 @@
 @extends('layouts.master2')
 
 @section('title')
-تسجيل الدخول - مورا سوفت للادارة القانونية
-@stop
+Encryption Invoices System - تسجيل دخول
+@endsection
 
 
 @section('css')

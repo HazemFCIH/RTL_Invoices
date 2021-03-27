@@ -107,7 +107,7 @@ if($secExist) {
 
             'section_name.required' => 'يرجى ادخال  اسم القسم',
             'section_name.unique' => 'اسم القسم مسجل مسبقا',
-            'description' => 'يرجي ادخال وصف القسم',
+            'description.required' => 'يرجي ادخال وصف القسم',
 
 
 
@@ -131,7 +131,7 @@ if($secExist) {
      */
     public function destroy(Request $request)
     {
-        Section::find($request->id)->delete();
+        Section::findOrFail($request->id)->delete();
         session()->flash('delete','تم حذف القسم بنجاح');
         return redirect('sections');
 

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use App\Models\Section;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
@@ -24,7 +27,8 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        //
+        $sections = Section::all();
+        return view('Invoices.createInvoice',compact('sections'));
     }
 
     /**
@@ -35,7 +39,26 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Invoice::create([
+
+            'invoice_number'=>$request->invoice_number,
+            'invoice_date'=>$request->invoice_Date,
+            'due_date'=>$request->Due_date,
+            'section_id'=>$request->section,
+            'product'=>$request->product,
+            'amount_collection'=>$request->Amount_collection,
+            'amount_commission'=>$request->Amount_Commission,
+            'discount' =>$request->discount,
+            'rate_vat' =>$request->rate_vat,
+            'value_vat' =>$request->value_vat,
+            'total' =>$request->total,
+            'note' =>$request->note,
+            'status' =>'غير مدفوعه',
+            'value_status' =>2,
+            'user' =>(Auth::user()->name),
+        ]);
+        session()->flash('ADD','تم اضاقة الفاتورة بنجاح');
+        return redirect('invoices');
     }
 
     /**
@@ -81,5 +104,10 @@ class InvoiceController extends Controller
     public function destroy(Invoice $invoice)
     {
         //
+    }
+    public function getProducts($id) {  
+        $products = DB::table('products')->where("section_id",$id)->pluck("product_name","id");
+        return  json_encode($products);
+
     }
 }

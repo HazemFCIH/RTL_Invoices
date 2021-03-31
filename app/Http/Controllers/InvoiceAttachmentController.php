@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\InvoiceAttachment;
+use http\Exception\BadConversionException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceAttachmentController extends Controller
 {
@@ -78,8 +80,14 @@ class InvoiceAttachmentController extends Controller
      * @param  \App\Models\InvoiceAttachment  $invoiceAttachment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(InvoiceAttachment $invoiceAttachment)
+    public function destroy(Request $request)
     {
-        //
+       $Invoice_attachments = InvoiceAttachment::findOrFail($request->file_id);
+         $Invoice_attachments->delete();
+         Storage::disk('public_uploads')->delete($request->invoice_number.'/'.$request->file_name);
+         session()->flash('delete','تم حذف المنتج بنجاح');
+         return back();
+        return $Invoice_attachments;
+
     }
 }

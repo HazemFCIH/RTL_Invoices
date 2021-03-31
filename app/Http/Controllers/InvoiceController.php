@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Section;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\InvoiceDetail;
+use App\Models\InvoiceAttachment;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -17,7 +20,8 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        return view('Invoices.invoices');
+        $invoices = Invoice::all();
+        return view('Invoices.invoices',compact('invoices'));
     }
 
     /**
@@ -39,6 +43,15 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'invoice_number' => 'required|max:255|unique:invoices',
+        ],
+
+            [
+
+                'product_name.unique' => 'رقم الفاتورة مسجل مسبقا',
+
+            ]);
         Invoice::create([
 
             'invoice_number'=>$request->invoice_number,
@@ -57,6 +70,34 @@ class InvoiceController extends Controller
             'value_status' =>2,
             'user' =>(Auth::user()->name),
         ]);
+        $invoice_id = Invoice::latest()->first()->id;
+        InvoiceDetail::create([
+            'invoice_id'=>$invoice_id,
+            'invoice_number'=>$request->invoice_number,
+            'product'=>$request->product,
+            'section'=>$request->section,
+            'status' =>'غير مدفوعه',
+            'value_status' =>2,
+            'note' =>$request->note,
+            'user' =>(Auth::user()->name),
+
+        ]);
+
+        if($request->hasFile('image')){
+
+            $image = $request->file('image');
+            $file_name = $image->getClientOriginalName();
+            InvoiceAttachment::create([
+            'file_name' => $file_name,
+            'invoice_number'=>$request->invoice_number,
+            'invoice_id' => $invoice_id,
+            'Created_by' =>(Auth::user()->name),
+
+            ]);
+           $image->move(public_path('Attachments/'.$request->invoice_number),$file_name);
+
+        }
+
         session()->flash('ADD','تم اضاقة الفاتورة بنجاح');
         return redirect('invoices');
     }
@@ -69,7 +110,11 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        //
+        $invoice_data = Invoice::where('id',$invoice->id)->first();
+        $invoice_details = InvoiceDetail::where('invoice_id',$invoice->id)->get();
+        $invoice_attachmnets = InvoiceAttachment::where('invoice_id',$invoice->id)->get();
+
+        return view('Invoices.showInvoiceDetails',compact('invoice_details','invoice_attachmnets','invoice_data'));
     }
 
     /**
@@ -105,9 +150,17 @@ class InvoiceController extends Controller
     {
         //
     }
-    public function getProducts($id) {  
+    public function getProducts($id) {
         $products = DB::table('products')->where("section_id",$id)->pluck("product_name","id");
         return  json_encode($products);
 
+    }
+    public function getfile($invoice_number,$file_name){
+        $files = Storage::disk('public_uploads')->getDriver()->getAdapter()->applyPathPrefix($invoice_number.'/'.$file_name);
+        return response()->download($files);
+    }
+    public function openfile($invoice_number,$file_name){
+        $files = Storage::disk('public_uploads')->getDriver()->getAdapter()->applyPathPrefix($invoice_number.'/'.$file_name);
+        return response()->file($files);
     }
 }

@@ -19,11 +19,25 @@
 							<h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/قائمة الفواتير</span>
 						</div>
 					</div>
-		
+
 				</div>
 				<!-- breadcrumb -->
 @endsection
 @section('content')
+    {{-- Successfully ADDED Section --}}
+
+    @if (session()->has('ADD'))
+
+
+        <div class="alert alert-success " role="alert">
+            <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>{{session()->get('ADD')}}</strong>
+        </div>
+
+    @endif
+    {{-- End Successfully ADDED Section --}}
 				<!-- row -->
 				<div class="row">
                     <div class="col-xl-12">
@@ -53,29 +67,48 @@
                                                 <th class="border-bottom-0">الاجمالي</th>
                                                 <th class="border-bottom-0">الحالة</th>
                                                 <th class="border-bottom-0">ملاحضات</th>
+                                                <th class="border-bottom-0">العمليات</th>
 
 
 
 
-											</tr>
+
+
+                                            </tr>
 										</thead>
 										<tbody>
+                                        @foreach($invoices as $invoice)
 											<tr>
-												<td>1</td>
-												<td>3213</td>
-												<td>2233-12-12</td>
-												<td>2323-23-23</td>
-												<td>CC</td>
-                                                <td>البنك الاهلي</td>
-												<td>10%</td>
-												<td>2588</td>
-												<td>3233</td>
-                                                <td>323333</td>
+												<td>{{$loop->iteration}}</td>
+												<td>{{$invoice->invoice_number}}</td>
+												<td>{{$invoice->invoice_date}}</td>
+												<td>{{$invoice->due_date}}</td>
+												<td>{{$invoice->product}}</td>
+                                                <td>{{$invoice->section->section_name}}</td>
+												<td>{{$invoice->discount}}</td>
+												<td>{{$invoice->rate_vat}}</td>
+												<td>{{$invoice->value_vat}}</td>
+                                                <td>{{$invoice->total}}</td>
 
-												<td>غير مدفوعة</td>
-												<td>لم يتم السداد اللي الان</td>
-											</tr>
-											
+												<td>
+                                                @if($invoice->value_status == 1)
+                                                    <span class="text-warning">{{$invoice->status}}</span>
+
+                                                    @elseif($invoice->value_status == 2)
+                                                        <span class="text-danger">{{$invoice->status}}</span>
+                                                    @elseif($invoice->value_status == 3)
+                                                        <span class="text-success">{{$invoice->status}}</span>
+                                                    @endif
+
+                                                </td>
+												<td>{{$invoice->note}}</td>
+                                                <td>  <a class="modal-effect btn btn-success " href="{{route('invoices.show',$invoice->id)}}">
+                                                        <i class="las la-plus"></i>
+                                                        عرض الفاتورة
+                                                    </a></td>
+
+                                            </tr>
+                                        @endforeach
 										</tbody>
 									</table>
 								</div>

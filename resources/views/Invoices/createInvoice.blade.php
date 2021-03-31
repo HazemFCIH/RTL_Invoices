@@ -37,28 +37,15 @@
     @endforeach
 
 </div>
-    
+
 @endif
 {{-- End Catch Validation Errors --}}
-{{-- Succesfuly ADDED Section --}}
 
-@if (session()->has('ADD'))
-
-
-<div class="alert alert-success " role="alert">
-    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
-    <span aria-hidden="true">&times;</span>
-</button>
-    <strong>{{session()->get('ADD')}}</strong> 
-</div>
-    
-@endif
-{{-- End Succesfuly ADDED Section --}}
 				<!-- row -->
 				<div class="row">
 
 
-                    
+
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
@@ -174,7 +161,7 @@
                         <h5 class="card-title">المرفقات</h5>
 
                         <div class="col-sm-12 col-md-12">
-                            <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
+                            <input type="file" name="image" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
                                 data-height="70" />
                         </div><br>
 
@@ -255,8 +242,8 @@ $.each(data, function(key,value){
 });
 
 });
- 
-    
+
+
      </script>
 
 

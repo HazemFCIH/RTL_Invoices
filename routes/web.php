@@ -39,6 +39,7 @@ Route::get('/section/{id}',InvoiceController::class.'@getProducts');
 Route::get('download/{invoice_number}/{file_name}',InvoiceController::class.'@getfile');
 Route::get('view_file/{invoice_number}/{file_name}',InvoiceController::class.'@openfile');
 Route::post('/delete_file',InvoiceAttachmentController::class.'@destroy')->name('delete_file');
+Route::post('/attachment',InvoiceAttachmentController::class.'@store')->name('attachment');
 
 Route::get('/{page}',AdminController::class.'@index');
 

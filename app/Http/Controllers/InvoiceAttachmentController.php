@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InvoiceAttachment;
 use http\Exception\BadConversionException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class InvoiceAttachmentController extends Controller
@@ -37,7 +38,29 @@ class InvoiceAttachmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'file_name' => 'mimes:pdf,jpeg,png,jpg',
+        ],
+
+            [
+
+                'file_name.mimes' => 'صيغة المرفق يجب ان تكون png,jpg,jpeg. ',
+
+            ]);
+        $attachment = $request->file('file_name');
+        $attachment_name = $attachment->getClientOriginalName();
+        InvoiceAttachment::create([
+            'file_name' => $attachment_name,
+            'invoice_number'=>$request->invoice_number,
+            'invoice_id' => $request->invoice_id,
+            'Created_by' =>(Auth::user()->name),
+
+        ]);
+        $attachment->move(public_path('Attachments/'.$request->invoice_number),$attachment_name);
+        session()->flash('ADD','تم اضاقة المرفق بنجاح');
+        return back();
+
+
     }
 
     /**

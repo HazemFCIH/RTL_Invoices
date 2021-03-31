@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Invoice extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $guarded = [];
     protected $dates = ['deleted_at'];
     /**
@@ -19,4 +23,5 @@ class Invoice extends Model
     {
         return $this->belongsTo(Section::class);
     }
+
 }

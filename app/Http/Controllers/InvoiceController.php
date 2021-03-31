@@ -125,7 +125,8 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        //
+        $sections = Section::all();
+        return view('Invoices.editInvoice',compact('sections','invoice'));
     }
 
     /**
@@ -137,7 +138,21 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, Invoice $invoice)
     {
-        //
+        $validated = $request->validate([
+            'invoice_number' => 'required|max:255|unique:invoices,invoice_number,'.$invoice->id,
+
+        ],
+
+            [
+
+                'invoice_number.required' => 'يرجى ادخال  اسم الفاتورة',
+                'invoice_number.unique' => 'اسم الفاتورة مسجل مسبقا',
+
+            ]);
+
+        $invoice->update($request->all());
+        session()->flash('EDIT','تم تعديل الفاتورة بنجاح');
+        return back();
     }
 
     /**
@@ -146,9 +161,19 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Invoice $invoice)
+    public function destroy(Request $request)
     {
-        //
+        $invoice = Invoice::findOrFail($request->invoice_id);
+        $attachments = InvoiceAttachment::where('invoice_id',$invoice->id)->get();
+        if(!empty($attachments->invoice_number)){
+
+            Storage::disk('public_uploads')->deleteDirectory($attachments->invoice_number);
+        }
+        $invoice->forceDelete();
+        session()->flash('delete');
+        return redirect('invoices');
+
+
     }
     public function getProducts($id) {
         $products = DB::table('products')->where("section_id",$id)->pluck("product_name","id");

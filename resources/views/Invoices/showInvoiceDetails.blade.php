@@ -13,6 +13,34 @@
     <!-- breadcrumb -->
 @endsection
 @section('content')
+    {{-- Catch Validation Errors --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @foreach ($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+
+        </div>
+
+    @endif
+    {{-- End Catch Validation Errors --}}
+    {{-- Successfully ADDED Section --}}
+
+    @if (session()->has('ADD'))
+
+
+        <div class="alert alert-success " role="alert">
+            <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>{{session()->get('ADD')}}</strong>
+        </div>
+
+    @endif
+    {{-- End Successfully ADDED Section --}}
     {{-- Succesfuly Deleted Section --}}
 
 
@@ -167,6 +195,34 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="tab13">
+                        <div class="card card-statistics">
+                            <div class="card-body">
+
+                                <p class="text-danger"> صيغة المرفق * pdf,jpeg, jpj , png</p>
+                                <h5 class="card-title"> اضافة مرفاقات</h5>
+                                <form method="post" action="{{route('attachment')}}" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group">
+
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="file_name" name="file_name" >
+                                        <input type="hidden" id="invoice_number" name="invoice_number" value="{{$invoice_data->invoice_number}}">
+                                        <input type="hidden" id="invoice_id" name="invoice_id" value="{{$invoice_data->id}}">
+                                        <label for="file_name" class="custom-file-label"> حدد المرفق</label>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                    <button class="btn btn-primary btn-sm" type="submit" name="uploadedFile">
+
+                                        تأكيد
+                                    </button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
                         <div class="table-responsive mt-15">
                             <table class="table center-aligend-table mb-0 table-hover" style="text-align:center">
                                 <thead>
@@ -181,8 +237,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+
                                 @foreach($invoice_attachmnets as $attach)
+                                    <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$attach->file_name}}</td>
                                         <td>{{$attach->Created_by}}</td>
@@ -217,10 +274,10 @@
 
 
 
-
+                                    </tr>
                                     @endforeach
 
-                                </tr>
+
                                 </tbody>
                             </table>
                         </div>

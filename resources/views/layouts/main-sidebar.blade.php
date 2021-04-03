@@ -33,8 +33,10 @@
 							<li><a class="slide-item" href="{{ route('paid_invoices')}}">الفواتير المدفوعة</a></li>
 							<li><a class="slide-item" href="{{route('unpaid_invoices')}}">الفواتير غير المدفوعة</a></li>
 							<li><a class="slide-item" href="{{route('partial_paid_invoices') }}">الفواتير المدفوعة جزئيا</a></li>
+                            <li><a class="slide-item" href="{{route('invoice_archive') }}">ارشيف الفواتير</a></li>
 
-						</ul>
+
+                        </ul>
 					</li>
 
 					<li class="side-item side-item-category">التقارير</li>

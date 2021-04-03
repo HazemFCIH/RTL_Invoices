@@ -240,5 +240,16 @@ class InvoiceController extends Controller
         $invoices = Invoice::where('value_status',1)->get();
         return view('Invoices.partialPaidInvoices',compact('invoices'));
     }
+    public function archive_invoices(Request $request){
+
+        $invoice = Invoice::findOrFail($request->invoice_id);
+        $invoice->delete();
+        session()->flash('invoice-archived');
+        return redirect('/invoice_archive');
+    }
+    public function print_invoice($id){
+        $invoice = Invoice::findOrFail($id);
+        return view('Invoices.printInvoice',compact('invoice'));
+    }
 
 }

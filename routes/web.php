@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoiceAttachmentController;
+use App\Http\Controllers\ArchiveInvoiceController;
+
 
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ProductController;
@@ -45,6 +47,18 @@ Route::post('status_update',InvoiceController::class.'@status_update')->name('st
 Route::get('paid_invoices',InvoiceController::class.'@paid_invoices')->name('paid_invoices');
 Route::get('unpaid_invoices',InvoiceController::class.'@unpaid_invoices')->name('unpaid_invoices');
 Route::get('partial_paid_invoices',InvoiceController::class.'@partial_paid_invoices')->name('partial_paid_invoices');
+Route::get('invoice_archive',ArchiveInvoiceController::class.'@index')->name('invoice_archive');
+
+Route::post('archive_invoices',InvoiceController::class.'@archive_invoices')->name('archive_invoices');
+Route::get('print_invoice/{id}',InvoiceController::class.'@print_invoice')->name('print_invoice');
+
+Route::post('restore_invoices',ArchiveInvoiceController::class.'@restore_invoices')->name('restore_invoices');
+Route::post('delete_archived',ArchiveInvoiceController::class.'@destroy')->name('delete_archived');
+
+
+
+
+
 
 
 

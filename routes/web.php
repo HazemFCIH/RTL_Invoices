@@ -40,6 +40,16 @@ Route::get('download/{invoice_number}/{file_name}',InvoiceController::class.'@ge
 Route::get('view_file/{invoice_number}/{file_name}',InvoiceController::class.'@openfile');
 Route::post('/delete_file',InvoiceAttachmentController::class.'@destroy')->name('delete_file');
 Route::post('/attachment',InvoiceAttachmentController::class.'@store')->name('attachment');
+Route::get('change_invoice_status/{id}',InvoiceController::class.'@change_invoice_status')->name('change_invoice_status');
+Route::post('status_update',InvoiceController::class.'@status_update')->name('status_update');
+Route::get('paid_invoices',InvoiceController::class.'@paid_invoices')->name('paid_invoices');
+Route::get('unpaid_invoices',InvoiceController::class.'@unpaid_invoices')->name('unpaid_invoices');
+Route::get('partial_paid_invoices',InvoiceController::class.'@partial_paid_invoices')->name('partial_paid_invoices');
+
+
+
+
+
 
 Route::get('/{page}',AdminController::class.'@index');
 

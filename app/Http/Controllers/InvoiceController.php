@@ -164,7 +164,7 @@ class InvoiceController extends Controller
     public function destroy(Request $request)
     {
         $invoice = Invoice::findOrFail($request->invoice_id);
-        $attachments = InvoiceAttachment::where('invoice_id',$invoice->id)->get();
+        $attachments = InvoiceAttachment::where('invoice_id',$invoice->id)->first();
         if(!empty($attachments->invoice_number)){
 
             Storage::disk('public_uploads')->deleteDirectory($attachments->invoice_number);
@@ -188,4 +188,57 @@ class InvoiceController extends Controller
         $files = Storage::disk('public_uploads')->getDriver()->getAdapter()->applyPathPrefix($invoice_number.'/'.$file_name);
         return response()->file($files);
     }
+    public function change_invoice_status($id){
+        $invoice = Invoice::where('id',$id)->first();
+        return view('Invoices.updateInvoiceStatus',compact('invoice'));
+    }
+    public function status_update(Request $request){
+        $invoice = Invoice::findOrFail($request->invoice_id);
+        if($request->status == 1)
+        {
+            $invoice->update([
+
+                'status' => 'مدفوعة جزئيا',
+                'value_status' =>$request->status,
+                'payment_date'=>$request->payment_date,
+            ]);
+
+        }elseif ($request->status == 3)
+        {
+            $invoice->update([
+
+                'status' => 'مدفوعة كليا',
+                'value_status' =>$request->status,
+                'payment_date'=>$request->payment_date,
+            ]);
+        }
+        InvoiceDetail::create([
+            'invoice_id'=>$request->invoice_id,
+            'invoice_number'=>$invoice->invoice_number,
+            'product'=>$invoice->product,
+            'section'=>$invoice->section_id,
+            'status'=>$invoice->status,
+            'value_status'=>$invoice->value_status,
+            'user'=>(Auth::user()->name),
+            'note'=>$invoice->note,
+        ]);
+        session()->flash('update_status');
+        return redirect('invoices');
+
+    }
+
+
+    public function paid_invoices(){
+        $invoices = Invoice::where('value_status',3)->get();
+        return view('Invoices.paidInvoices',compact('invoices'));
+    }
+    public function unpaid_invoices(){
+        $invoices = Invoice::where('value_status',2)->get();
+        return view('Invoices.unPaidInvoices',compact('invoices'));
+    }
+    public function partial_paid_invoices(){
+        $invoices = Invoice::where('value_status',1)->get();
+        return view('Invoices.partialPaidInvoices',compact('invoices'));
+    }
+
 }

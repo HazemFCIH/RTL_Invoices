@@ -59,7 +59,26 @@
 
     @endif
     {{-- End Succesfuly Deleted Section --}}
-				<!-- row -->
+    {{-- Succesfuly status_updated Section --}}
+
+
+    @if (session()->has('update_status'))
+
+        <script>
+
+            window.onload = function () {
+                notif({
+                    msg: 'تم تغير حالة الفاتورة بنجاح',
+                    type: 'success'
+                })
+            }
+
+        </script>
+
+    @endif
+    {{-- End Succesfuly status_updated Section --}}
+
+    <!-- row -->
 				<div class="row">
                     <div class="col-xl-12">
 						<div class="card mg-b-20">
@@ -132,6 +151,8 @@
                                                         <div  class="dropdown-menu tx-13">
                                                             <a class="dropdown-item" href="{{route('invoices.show',$invoice->id)}}">عرض الفاتورة</a>
                                                             <a class="dropdown-item"href="{{route('invoices.edit',$invoice->id)}}">تعديل الفاتورة</a>
+                                                            <a class="dropdown-item"href="{{route('change_invoice_status',$invoice->id)}}">تغير حالة الدفع</a>
+
                                                             <a class="dropdown-item"href="#delete_invoice"
                                                             data-toggle="modal"
                                                             data-invoice_id = "{{$invoice->id}}"

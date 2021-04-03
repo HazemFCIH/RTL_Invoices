@@ -156,9 +156,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($invoice_details as $det)
 
                                 <tr>
-                                    @foreach($invoice_details as $det)
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$det->invoice_number}}</td>
                                     <td>{{$det->product}}</td>
@@ -178,18 +178,19 @@
                                         </td>
 
 
-                                        <td>@if(!($det->invoices->payment_date))
+                                        <td>@if(!($invoice_data->payment_date))
                                                 في انتظار الدفع
                                             @else
-                                            {{$det->invoices->payment_date}}
+                                            {{$invoice_data->payment_date}}
                                             @endif
                                         </td>
                                     <td>{{$det->note}}</td>
                                     <td>{{$det->created_at}}</td>
                                     <td>{{$det->user}}</td>
-                                    @endforeach
 
                                 </tr>
+                                @endforeach
+
                                 </tbody>
                             </table>
                         </div>

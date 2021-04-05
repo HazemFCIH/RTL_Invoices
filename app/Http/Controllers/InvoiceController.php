@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Notifications\addInvoice;
 use Illuminate\Http\Request;
 use App\Models\Section;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use App\Models\InvoiceDetail;
 use App\Models\InvoiceAttachment;
 use Illuminate\Support\Facades\Storage;
@@ -97,7 +100,8 @@ class InvoiceController extends Controller
            $image->move(public_path('Attachments/'.$request->invoice_number),$file_name);
 
         }
-
+        $user = User::first();
+        Notification::send($user,new addInvoice($invoice_id));
         session()->flash('ADD','تم اضاقة الفاتورة بنجاح');
         return redirect('invoices');
     }

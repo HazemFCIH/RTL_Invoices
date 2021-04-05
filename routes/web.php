@@ -54,6 +54,8 @@ Route::get('print_invoice/{id}',InvoiceController::class.'@print_invoice')->name
 
 Route::post('restore_invoices',ArchiveInvoiceController::class.'@restore_invoices')->name('restore_invoices');
 Route::post('delete_archived',ArchiveInvoiceController::class.'@destroy')->name('delete_archived');
+Route::get('invoice/export/', InvoiceController::class.'@export')->name('export_invoices');
+
 
 
 

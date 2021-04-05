@@ -101,12 +101,17 @@
                     <div class="col-xl-12">
 						<div class="card mg-b-20">
 							<div class="card-header pb-0">
-								<div class="col-sm-6 col-md-4 col-xl-3 mg-t-20">
+								<div class="col-sm-4 col-md-4 col-xl-3 mg-t-20">
                                     <a class="modal-effect btn btn-primary " href="{{route('invoices.create')}}">
 										<i class="las la-plus"></i>
 										اضافة فاتورة
 									</a>
+                                    <a class="modal-effect btn btn-success " href="{{route('export_invoices')}}">
+                                        <i class="las la-file-export"></i>
+                                        تصيدر الفواتير
+                                    </a>
                                 </div>
+
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">

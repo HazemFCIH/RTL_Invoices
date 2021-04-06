@@ -9,6 +9,9 @@ use App\Http\Controllers\ArchiveInvoiceController;
 
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
+
 
 
 
@@ -56,6 +59,12 @@ Route::post('restore_invoices',ArchiveInvoiceController::class.'@restore_invoice
 Route::post('delete_archived',ArchiveInvoiceController::class.'@destroy')->name('delete_archived');
 Route::get('invoice/export/', InvoiceController::class.'@export')->name('export_invoices');
 
+Route::group(['middleware'=> ['auth']],function () {
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
+
+
+});
 
 
 

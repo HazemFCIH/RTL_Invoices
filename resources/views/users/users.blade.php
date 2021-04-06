@@ -37,7 +37,7 @@
 
                     <div class="card-header pb-0">
                         <div class="col-sm-6 col-md-4 col-xl-3 mg-t-20">
-                            <a class="modal-effect btn btn-success " data-effect="effect-rotate-bottom" data-toggle="modal" href="#modaldemo8">اضافة مستخدم</a>
+                            <a class="modal-effect btn btn-success " data-effect="effect-rotate-bottom" data-toggle="modal" href="{{route('users.create')}}">اضافة مستخدم</a>
                         </div>
                     </div>
                     {{-- End Create Modal header --}}
@@ -64,8 +64,38 @@
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$user->name}}</td>
                                         <td>{{$user->email}}</td>
-                                        <td>{{$user->name}}</td>
-                                        <td>{{$user->name}}</td>
+                                        <td>
+                                            @if($user->status == 'مفعل')
+                                                <span class="label text-success d-flex">
+                                                    <div class="dot-label bg-success ml-1">
+
+                                                    </div>
+                                                    {{$user->status}}
+
+                                                </span>
+                                            @else
+                                                <span class="label text-danger d-flex">
+                                                    <div class="dot-label bg-danger ml-1">
+
+                                                    </div>
+                                                    {{$user->status}}
+
+                                                </span>
+                                            @endif
+
+
+                                        </td>
+                                        <td>
+                                            @if(!empty($user->getRoleNames()))
+
+                                            @foreach($user->getRoleNames() as $role)
+                                                <label class="badge badge-success">
+                                                    {{$role}}
+                                                </label>
+                                                @endforeach
+                                            @endif
+
+                                        </td>
 
                                         <td>
                                             <a class="modal-effect btn btn-info " data-effect="effect-rotate-bottom" data-toggle="modal" data-id="{{$user->id}}" href="#exampleModal2" title="تعديل">

@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class SectionController extends Controller
 {
+    function  __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:الاقسام');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -102,7 +108,7 @@ if($secExist) {
             'section_name' => 'required|max:255|unique:sections,section_name,'.$id,
             'description' => 'required',
         ],
-        
+
         [
 
             'section_name.required' => 'يرجى ادخال  اسم القسم',

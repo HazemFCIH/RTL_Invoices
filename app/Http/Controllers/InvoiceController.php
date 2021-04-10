@@ -18,6 +18,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
 {
+    function  __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:الفواتير');
+
+
+
+    }
     /**
      * Display a listing of the resource.
      *

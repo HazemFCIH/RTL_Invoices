@@ -14,6 +14,8 @@
     <link href="{{URL::asset('assets/plugins/owl-carousel/owl.carousel.css')}}" rel="stylesheet">
     <!---Internal  Multislider css-->
     <link href="{{URL::asset('assets/plugins/multislider/multislider.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('assets/plugins/notify/css/notifIt.css')}}" rel="stylesheet"/>
+
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
@@ -27,7 +29,60 @@
     <!-- breadcrumb -->
 @endsection
 @section('content')
+    {{-- Succesfuly create role Section --}}
 
+
+    @if (session()->has('role-created'))
+
+        <script>
+
+            window.onload = function () {
+                notif({
+                    msg: 'تم اضافة صلاحية بنجاح',
+                    type: 'success'
+                })
+            }
+
+        </script>
+
+    @endif
+    {{-- End Succesfuly create-role Section --}}
+    {{-- Succesfuly update role Section --}}
+
+
+    @if (session()->has('role-updated'))
+
+        <script>
+
+            window.onload = function () {
+                notif({
+                    msg: 'تم تعديل الصلاحية بنجاح',
+                    type: 'success'
+                })
+            }
+
+        </script>
+
+    @endif
+    {{-- End Succesfuly update-role Section --}}
+    {{-- Succesfuly deleted role Section --}}
+
+
+    @if (session()->has('role-deleted'))
+
+        <script>
+
+            window.onload = function () {
+                notif({
+                    msg: 'تم حذف الصلاحية بنجاح',
+                    type: 'success'
+                })
+            }
+
+        </script>
+
+    @endif
+    {{-- End Succesfuly deleted-role Section --}}
     <!-- row -->
     <div class="row">
         {{-- Start Section Component --}}
@@ -37,7 +92,7 @@
 
                 <div class="card-header pb-0">
                     <div class="col-sm-6 col-md-4 col-xl-3 mg-t-20">
-                        <a class="modal-effect btn btn-success " data-effect="effect-rotate-bottom" data-toggle="modal" href="#modaldemo8">اضافة صلاحية</a>
+                        <a class="btn btn-success "  href="{{route('roles.create')}}">اضافة صلاحية</a>
                     </div>
                 </div>
                 {{-- End Create Modal header --}}
@@ -59,17 +114,34 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$role->name}}</td>
+                                @if($role->name == 'Owner')
 
+                                    <td> غير مسموح التعديل</td>
+                                    @else
 
                                     <td>
-                                        <a class="modal-effect btn btn-info " data-effect="effect-rotate-bottom" data-toggle="modal" data-id="{{$role->id}}" href="#exampleModal2" title="تعديل">
-                                            <i class="las la-pen"></i>
-                                        </a>
-                                        <a class="modal-effect btn btn-danger " data-effect="effect-rotate-bottom" data-toggle="modal"    href="#exampleModal3" title="حذف">
-                                            <i class="las la-trash"></i>
-                                        </a>
+                                        @can('عرض صلاحية')
+                                            <a class="btn btn-success btn-sm"
+                                               href="{{ route('roles.show', $role->id) }}">عرض</a>
+                                        @endcan
+
+                                        @can('تعديل صلاحية')
+                                            <a class="btn btn-primary btn-sm"
+                                               href="{{ route('roles.edit', $role->id) }}">تعديل</a>
+                                        @endcan
+
+                                        @if ($role->name !== 'owner')
+                                            @can('حذف صلاحية')
+                                                {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy',
+                                                $role->id], 'style' => 'display:inline']) !!}
+                                                {!! Form::submit('حذف', ['class' => 'btn btn-danger btn-sm']) !!}
+                                                {!! Form::close() !!}
+                                            @endcan
+                                        @endif
+
 
                                     </td>
+                                    @endif
                                 </tr>
                             @endforeach
 
@@ -115,4 +187,7 @@
     <script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
     <!-- Internal Modal js-->
     <script src="{{URL::asset('assets/js/modal.js')}}"></script>
+    <!--Internal  Notify js -->
+    <script src="{{URL::asset('assets/plugins/notify/js/notifIt.js')}}"></script>
+    <script src="{{URL::asset('assets/plugins/notify/js/notifit-custom.js')}}"></script>
 @endsection

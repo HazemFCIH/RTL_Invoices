@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    function  __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:المنتجات');
+
+
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -140,6 +148,6 @@ return redirect('products');
         Product::findOrFail($request->id)->delete();
         session()->flash('delete','تم حذف القسم بنجاح');
         return redirect('products');
-        
+
     }
 }

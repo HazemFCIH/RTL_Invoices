@@ -14,6 +14,8 @@
     <link href="{{URL::asset('assets/plugins/owl-carousel/owl.carousel.css')}}" rel="stylesheet">
     <!---Internal  Multislider css-->
     <link href="{{URL::asset('assets/plugins/multislider/multislider.css')}}" rel="stylesheet">
+    <link href="{{URL::asset('assets/plugins/notify/css/notifIt.css')}}" rel="stylesheet"/>
+
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
@@ -27,6 +29,60 @@
     <!-- breadcrumb -->
 @endsection
 @section('content')
+    {{-- Succesfuly create user Section --}}
+
+
+    @if (session()->has('user-created'))
+
+        <script>
+
+            window.onload = function () {
+                notif({
+                    msg: 'تم اضافة مستخدم بنجاح',
+                    type: 'success'
+                })
+            }
+
+        </script>
+
+    @endif
+    {{-- End Succesfuly create-user Section --}}
+    {{-- Succesfuly updated user Section --}}
+
+
+    @if (session()->has('user-updated'))
+
+        <script>
+
+            window.onload = function () {
+                notif({
+                    msg: 'تم تحديث المستخدم بنجاح',
+                    type: 'success'
+                })
+            }
+
+        </script>
+
+    @endif
+    {{-- End Succesfuly updated user Section --}}
+    {{-- Succesfuly deleted user Section --}}
+
+
+    @if (session()->has('user-deleted'))
+
+        <script>
+
+            window.onload = function () {
+                notif({
+                    msg: 'تم حذف المستخدم بنجاح',
+                    type: 'success'
+                })
+            }
+
+        </script>
+
+    @endif
+    {{-- End Succesfuly deleted user Section --}}
 
         <!-- row -->
         <div class="row">
@@ -37,7 +93,7 @@
 
                     <div class="card-header pb-0">
                         <div class="col-sm-6 col-md-4 col-xl-3 mg-t-20">
-                            <a class="modal-effect btn btn-success " data-effect="effect-rotate-bottom" data-toggle="modal" href="{{route('users.create')}}">اضافة مستخدم</a>
+                            <a class="btn btn-success"   href="{{route('users.create')}}">اضافة مستخدم</a>
                         </div>
                     </div>
                     {{-- End Create Modal header --}}
@@ -97,15 +153,25 @@
 
                                         </td>
 
+                                        @if($user->getRoleNames()->contains('Owner') )
+                                            <td>
+                                                غير مسموح التعديل
+                                            </td>
+                                        @else
                                         <td>
-                                            <a class="modal-effect btn btn-info " data-effect="effect-rotate-bottom" data-toggle="modal" data-id="{{$user->id}}" href="#exampleModal2" title="تعديل">
-                                                <i class="las la-pen"></i>
-                                            </a>
-                                            <a class="modal-effect btn btn-danger " data-effect="effect-rotate-bottom" data-toggle="modal"    href="#exampleModal3" title="حذف">
-                                                <i class="las la-trash"></i>
-                                            </a>
+                                            @can('تعديل مستخدم')
+                                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-info"
+                                                   title="تعديل"><i class="las la-pen"></i></a>
+                                            @endcan
 
+                                            @can('حذف مستخدم')
+                                                <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
+                                                   data-user_id="{{ $user->id }}" data-username="{{ $user->name }}"
+                                                   data-toggle="modal" href="#modaldemo8" title="حذف"><i
+                                                        class="las la-trash"></i></a>
+                                            @endcan
                                         </td>
+                                        @endif
                                     </tr>
                                 @endforeach
 
@@ -117,6 +183,7 @@
             </div>
             {{-- End Section Component --}}
 
+
         </div>
         <!-- row closed -->
 
@@ -124,6 +191,30 @@
     <!-- Container closed -->
     </div>
     <!-- main-content closed -->
+
+    <div class="modal" id="modaldemo8">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">حذف المستخدم</h6><button aria-label="Close" class="close"
+                                                                     data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <form action="{{ route('users.destroy', 'test') }}" method="post">
+                    {{ method_field('delete') }}
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <p>هل انت متاكد من عملية الحذف ؟</p><br>
+                        <input type="hidden" name="user_id" id="user_id" value="">
+                        <input class="form-control" name="username" id="username" type="text" readonly>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                        <button type="submit" class="btn btn-danger">تاكيد</button>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
 @endsection
 @section('js')
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
@@ -151,4 +242,19 @@
     <script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
     <!-- Internal Modal js-->
     <script src="{{URL::asset('assets/js/modal.js')}}"></script>
+    <!--Internal  Notify js -->
+    <script src="{{URL::asset('assets/plugins/notify/js/notifIt.js')}}"></script>
+    <script src="{{URL::asset('assets/plugins/notify/js/notifit-custom.js')}}"></script>
+    <!-- Delete Modal -->
+    <script>
+        $('#modaldemo8').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var user_id = button.data('user_id')
+            var username = button.data('username')
+            var modal = $(this)
+            modal.find('.modal-body #user_id').val(user_id);
+            modal.find('.modal-body #username').val(username);
+        })
+    </script>
+
 @endsection

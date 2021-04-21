@@ -12,7 +12,6 @@ class RoleController extends Controller
 {
     function  __construct()
     {
-        $this->middleware('auth');
         $this->middleware('permission:صلاحيات المستخدمين',['only'=>['index']]);
         $this->middleware('permission:عرض صلاحية',['only'=>['show']]);
         $this->middleware('permission:اضافة صلاحية',['only'=>['create','store']]);

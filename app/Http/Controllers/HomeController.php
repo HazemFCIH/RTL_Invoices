@@ -72,7 +72,7 @@ class HomeController extends Controller
         $pie_chart = app()->chartjs
             ->name('pieChartTest')
             ->type('pie')
-            ->size(['width' => 400, 'height' => 240])
+            ->size(['width' => 400, 'height' => 230])
             ->labels([ 'الفواتير الغير مدفوعة', 'الفواتير المدفوعة جزئيا','الفواتير المدفوعة'])
             ->datasets([
                 [

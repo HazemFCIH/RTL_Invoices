@@ -133,7 +133,7 @@ Encryption - Invoices System
 						<div class="card">
 
 							<div class="card" >
-                                <div style="width:75%;">
+                                <div style="width:100%;">
                                     {!! $bar_chart->render() !!}
                                 </div>
 							</div>
@@ -141,7 +141,7 @@ Encryption - Invoices System
 					</div>
 					<div class="col-lg-12 col-xl-5">
 						<div class="card">
-                            <div style="width:75%;">
+                            <div style="width:100%;">
                                 {!! $pie_chart->render() !!}
                             </div>
 						</div>

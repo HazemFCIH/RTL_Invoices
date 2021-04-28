@@ -3,8 +3,8 @@
 <h2> Features</h2>
 <ul>
     <li>Multi users</li>
-    <li>Email Notificatios</li>
-     <li>System Notificatios</li>
+    <li>Email Notifications</li>
+     <li>System Notifications</li>
       <li>Dashboard Statistics</li>
       <li>Print Invoices throw PDF form</li>
       <li>Export Invoices to Excel</li>

@@ -1,4 +1,4 @@
-<h1> Compelete Invocies System in Arabic Language</h1>
+<h1> Compelete Invoices System in Arabic Language</h1>
 <br>
 <h2> Features</h2>
 <ul>

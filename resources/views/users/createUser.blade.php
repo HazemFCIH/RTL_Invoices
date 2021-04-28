@@ -1,7 +1,7 @@
 
 @extends('layouts.master')
 @section('title')
-    اضافة مستخدم - مورا سوفت للادارة القانونية
+    اضافة مستخدم
 
 @endsection
 @section('css')

@@ -1,7 +1,7 @@
 
 @extends('layouts.master')
 @section('title')
-    اضافة صلاحية - مورا سوفت للادارة القانونية
+    اضافة صلاحية
 
 @endsection
 @section('css')

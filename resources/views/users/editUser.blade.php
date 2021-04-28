@@ -4,7 +4,7 @@
     <!-- Internal Nice-select css  -->
     <link href="{{URL::asset('assets/plugins/jquery-nice-select/css/nice-select.css')}}" rel="stylesheet" />
 @section('title')
-    تعديل مستخدم - مورا سوفت للادارة القانونية
+    تعديل مستخدم
 @stop
 
 

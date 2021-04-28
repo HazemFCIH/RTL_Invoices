@@ -3,7 +3,6 @@
 <h2> Features</h2>
 <ul>
     <li>Multi users roles</li>
-    <li>Email Notifications</li>
      <li>System Notifications</li>
       <li>Dashboard Statistics</li>
       <li>Print Invoices throw PDF form</li>
@@ -12,13 +11,18 @@
        <li>Invoices Archive</li>
        <li>Upload attachments</li>
         <li>Change invoices status</li>
-            <li>Add Multiple Sections and Products</li>
-
-
-
-
-
-
-
-    
+    <li>Add Multiple Sections and Products</li>
 </ul>
+<h3> 
+    refrences    
+</h3>
+<p>
+-This Project idea and system requirements are refrenced by MoraSoft youtube channel especially the invoices playlist. <br>
+- The Front-end Template is also used from Morasoft channel.     
+</p>
+<h3>
+Notes
+</h3>
+<p>
+the implementation is 100% done by me.
+</p>

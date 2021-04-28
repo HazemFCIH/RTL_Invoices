@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use App\Notifications\addInvoice;
+use App\Notifications\AddInvoiceDb;
 use Illuminate\Http\Request;
 use App\Models\Section;
 use App\Models\User;
@@ -110,8 +111,20 @@ class InvoiceController extends Controller
             $image->move(public_path('Attachments/' . $request->invoice_number), $file_name);
 
         }
-        $user = User::first();
-        Notification::send($user, new addInvoice($invoice_id));
+       // for one user
+        /*
+        $user = Auth::user()
+        $user->notify(new \App\Notifications\AddInvoiceDb($invoice));;*/
+        // for all users in the system
+
+        $user = User::get();
+
+
+       // send email notification
+        // Notification::send($user, new addInvoice($invoice_id));
+        $invoice = Invoice::latest()->first();
+        Notification::send($user, new AddInvoiceDb($invoice));
+
         session()->flash('ADD', 'تم اضاقة الفاتورة بنجاح');
         return redirect('invoices');
     }

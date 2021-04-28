@@ -5,7 +5,7 @@
     <!--Internal  treeview -->
     <link href="{{URL::asset('assets/plugins/treeview/treeview-rtl.css')}}" rel="stylesheet" type="text/css" />
 @section('title')
-    تعديل الصلاحيات - مورا سوفت للادارة القانونية
+    تعديل الصلاحيات
 @stop
 @endsection
 @section('page-header')

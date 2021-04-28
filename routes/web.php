@@ -31,7 +31,7 @@ use App\Http\Controllers\RoleController;
 Route::get('/', function () {
     return view('auth.login');
 });
-Auth::routes();
+Auth::routes(['register' => false]);
 /*
 if we want to have one admin only
 Auth::routes(['register'=>false]);
@@ -71,6 +71,15 @@ Route::get('/invoice-reports',InvoiceReportController::class.'@index')->name('in
 Route::post('/invoice-reports-search',InvoiceReportController::class.'@search_invoices')->name('invoice-reports-search');
 Route::get('/clients-reports',InvoiceReportController::class.'@client_index')->name('client_index');
 Route::post('/clients-reports-search',InvoiceReportController::class.'@client_search')->name('clients-reports-search');
+
+Route::get('/mark-all-read', function (){
+    $userUnNot = auth()->user()->unreadNotifications;
+    if($userUnNot){
+        $userUnNot->markAsRead();
+        return back();
+    }
+
+})->name('mark-all-read');
 
 
 

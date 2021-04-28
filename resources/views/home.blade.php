@@ -14,24 +14,19 @@ Encryption - Invoices System
 				<div class="breadcrumb-header justify-content-between">
 					<div class="left-content">
 						<div>
-						  <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Hi, welcome back!</h2>
-						  <p class="mg-b-0">Sales monitoring dashboard template.</p>
+						  <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">اهلا, مرحبا بك مرة اخرا!</h2>
+						  <p class="mg-b-0">نظام ادارة الفواتير الخاص بك</p>
 						</div>
 					</div>
 					<div class="main-dashboard-header-right">
+
 						<div>
-							<label class="tx-13">Customer Ratings</label>
-							<div class="main-star">
-								<i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star"></i> <span>(14,873)</span>
-							</div>
+							<label class="tx-13">اجمالي الفاوتير المستردة</label>
+							<h5>${{$paidInvoices_sum}}</h5>
 						</div>
 						<div>
-							<label class="tx-13">Online Sales</label>
-							<h5>563,275</h5>
-						</div>
-						<div>
-							<label class="tx-13">Offline Sales</label>
-							<h5>783,675</h5>
+							<label class="tx-13">اجمالي الفواتير الغير مدفوعة</label>
+							<h5>${{$unpaidInvoices_sum}}</h5>
 						</div>
 					</div>
 				</div>

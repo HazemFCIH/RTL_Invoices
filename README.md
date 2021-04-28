@@ -24,5 +24,5 @@
 Notes
 </h3>
 <p>
-the implementation is 100% done by me.
+Still in progress Not 100% Finished
 </p>

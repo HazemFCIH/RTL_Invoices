@@ -2,7 +2,7 @@
 <br>
 <h2> Features</h2>
 <ul>
-    <li>multi users</li>
+    <li>Multi users</li>
     <li>Email Notificatios</li>
      <li>System Notificatios</li>
       <li>Dashboard Statistics</li>
@@ -10,6 +10,9 @@
       <li>Export Invoices to Excel</li>
        <li>Filter invoices</li>
        <li>Invoices Archive</li>
+       <li>Upload attachments</li>
+        <li>Change invoices status</li>
+
 
 
 

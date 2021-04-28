@@ -17,7 +17,7 @@
     refrences    
 </h3>
 <p>
--This Project idea and system requirements are refrenced by MoraSoft youtube channel especially the invoices playlist. <br>
+-This Project idea and system requirements are refrenced from MoraSoft youtube channel especially the invoices playlist. <br>
 - The Front-end Template is also used from Morasoft channel.     
 </p>
 <h3>

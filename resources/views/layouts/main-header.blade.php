@@ -63,7 +63,9 @@
 											</div>
 										</a>
                                         @endforeach
-
+                                            <div class="text-center dropdown-footer">
+                                                <a href="#">عرض الكل</a>
+                                            </div>
 									</div>
 
 								</div>

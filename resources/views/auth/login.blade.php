@@ -30,7 +30,7 @@ Encryption Invoices System - تسجيل دخول
                                                  @csrf
 													<div class="form-group">
 													<label>البريد الالكتروني</label>
-                                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="demo@demo.com">
                                                      @error('email')
                                                      <span class="invalid-feedback" role="alert">
                                                      <strong>{{ $message }}</strong>
@@ -39,9 +39,9 @@ Encryption Invoices System - تسجيل دخول
 													</div>
 
 												 <div class="form-group">
-											 	 <label>كلمة المرور</label> 
-                                                
-                                                  <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+											 	 <label>كلمة المرور</label>
+
+                                                  <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="demo_pass">
 
                                                   @error('password')
                                                   <span class="invalid-feedback" role="alert">

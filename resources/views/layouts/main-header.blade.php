@@ -63,7 +63,9 @@
 											</div>
 										</a>
                                         @endforeach
-
+                                            <div class="text-center dropdown-footer">
+                                                <a href="#">عرض الكل</a>
+                                            </div>
 									</div>
 
 								</div>
@@ -81,11 +83,8 @@
 											</div>
 										</div>
 									</div>
-									<a class="dropdown-item" href=""><i class="bx bx-user-circle"></i>Profile</a>
-									<a class="dropdown-item" href=""><i class="bx bx-cog"></i> Edit Profile</a>
-									<a class="dropdown-item" href=""><i class="bx bxs-inbox"></i>Inbox</a>
-									<a class="dropdown-item" href=""><i class="bx bx-envelope"></i>Messages</a>
-									<a class="dropdown-item" href=""><i class="bx bx-slider-alt"></i> Account Settings</a>
+									
+									<a class="dropdown-item" href="{{route('users.index')}}"><i class="bx bx-slider-alt"></i> Account Settings</a>
 									<a class="dropdown-item" href=""   onclick="event.preventDefault();document.getElementById('logout-form').submit()"><i class="bx bx-log-out"></i>تسجيل خروج</a>
 									<form id="logout-form" method="POST" action="{{route('logout')}}" style="display: none;">
 									@csrf

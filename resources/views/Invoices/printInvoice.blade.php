@@ -68,12 +68,10 @@
                         </div>
                         <hr class="mg-b-40">
 
-                        <button id="printButton" onclick="printFun()" class="btn btn-danger float-left mt-3 mr-2">
+                        <button id="printButton" onclick="printFun()" class="btn btn-danger float-left mt-3 mr-2" disabled>
                             <i class="mdi mdi-printer ml-1"></i>Print
                         </button>
-                        <a href="#" class="btn btn-success float-left mt-3">
-                            <i class="mdi mdi-telegram ml-1"></i>Send Invoice
-                        </a>
+
                     </div>
                 </div>
             </div>
